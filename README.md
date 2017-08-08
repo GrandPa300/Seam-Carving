@@ -8,7 +8,7 @@
 </div>
 
 * A vertical/horizontal seam in an image is a path of pixels connected from the top/left to the bottom/right with one pixel in each row/column. 
-* Below left is the original  1600 x 1000 pixel image; below right is the result after removing about 30% in vertical and horizontal, resulting in a 50% smaller image. 
+* Below left is the original 1600 x 1000 pixel image; below right is the result after removing about 30% in vertical and horizontal, resulting in a 50% smaller image. 
 
 <div align=center>
 	<img src="http://i.imgur.com/CkoXSu2.jpg" width="40%" height="40%" />
@@ -25,20 +25,20 @@
 	<img src="http://i.imgur.com/JNBqmAE.jpg" width="40%" height="40%" />	
 </div>
 
-* Unlike cropping and scaling, mean features of the image are preserved and "squeezed" into a smaller area.
-* More about seam carving can be found at [here](https://en.wikipedia.org/wiki/Seam_carving).
+* Unlike cropping and scaling, main features of the image (usually with outstanding high energy) are preserved and "squeezed" into a smaller area.
+* More about seam carving can be found [here](https://en.wikipedia.org/wiki/Seam_carving).
 
 ### Implementation
 
-* __Energy__:  energy of edge pixels are set to be 1000, and energy of all other pixels in the image are calculated based by _dual-gradient energy function_.
+* __Energy__:  energy of edge pixels are set to be 1000, and energy of all other pixels in the image are calculated by _dual-gradient energy function_.
 
 * __Lowest Energy Seam__: 
-	* Seams are calculated by dynamic programming in this project: 
-		 1) DP Status: lowest cumulative energy from top to current pixel are recorded in corresponding index of DP array.  
-		 2) Initialization: pixels on 4 edges doesn't matter; all other pixels have initial energy + INFINITY
-		 3) Status Transfer Function: new energy = minimum (energy from previous calculation, energy from current calculation)
-	* For each pixel, energy of left, right and itself  are calculated; it's previous pixel are also recorded. 
-	* After all the lowest cumulative energy are calculated, tracing back from last second row of image, start from lowest cumulative energy in this row, and track all the way back to top, and the result is the lowest energy seam. 
+	* Seam-detecting is implemented by dynamic programming in this project: 
+		 1) __DP Status:__ lowest cumulative energy from top to current pixel are recorded in corresponding index of DP array.  
+		 2) __Initialization:__ pixels on 4 edges doesn't matter; all other pixels have initial energy + INFINITY
+		 3) __Status Transfer Function:__ _new energy = minimum of (energy from previous calculation, energy from current calculation)_
+	* For each pixel, energy of left, right and itself  are calculated; it's previous pixel location is also recorded. 
+	* After all the lowest cumulative energy are calculated, tracing back from last second row of image, starting from lowest cumulative energy pixel in this row, and track all the way back to top. The result is the lowest energy seam. 
 
 <div align=center>
 	<div><img src="http://i.imgur.com/N0TTzUA.png"width = "30%" height = "30%"/></div>
